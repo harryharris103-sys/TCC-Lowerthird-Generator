@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>TCC Graphics</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0B0D18">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -265,6 +269,7 @@ dlBtn.onclick=async ()=>{
   const original=dlBtn.textContent;
   const stageEl=document.getElementById('stage');
   const transparent = currentType==='lowerthird';
+  if(typeof html2canvas==='undefined'){ alert('Image export library is not cached yet. Open the app once while online, then it will work offline.'); return; }
   try{
     if(transparent) stageEl.classList.add('export-mode');
     const canvas=await html2canvas(stageEl,{backgroundColor: transparent?null:'#0E1122', scale:2});
@@ -291,6 +296,11 @@ dlBtn.onclick=async ()=>{
 };
 
 renderFields(); syncPreview();
+
+// ---- offline caching (service worker; needs https:// or localhost) ----
+if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')){
+  window.addEventListener('load',()=>{ navigator.serviceWorker.register('sw.js').catch(e=>console.warn('SW registration failed',e)); });
+}
 </script>
 </body>
 </html>
