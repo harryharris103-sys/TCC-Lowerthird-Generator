@@ -1,0 +1,12 @@
+{
+  "name": "TCC Graphics",
+  "short_name": "TCC Graphics",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0B0D18",
+  "theme_color": "#0B0D18",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
